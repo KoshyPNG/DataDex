@@ -1,5 +1,12 @@
 package main
 
+
+
+import (
+	"net/http"
+)
+
+
 type Dinosaur struct {
 	Nom              string   `json:"name"`
 	Nom_Scientifique string   `json:"scientific_name"`
@@ -27,4 +34,10 @@ type Site struct {
 	Pays               string `json:"country_name"`
 	Nombre_decouvertes int    `json:"discovery_count"`
 	Id                 string `json:"slug"`
+}
+
+
+
+func GetJson(Url,  ) {
+	req, err:= 
 }
