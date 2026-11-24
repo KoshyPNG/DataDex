@@ -1,11 +1,11 @@
 package main
 
-
-
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
+	"time"
 )
-
 
 type Dinosaur struct {
 	Nom              string   `json:"name"`
@@ -36,8 +36,23 @@ type Site struct {
 	Id                 string `json:"slug"`
 }
 
+var client = &http.Client{Timeout: 3 * time.Second}
 
+func GetJson(Url string, destination any) error {
+	req, err := http.NewRequest("GET", Url, nil)
+	if err != nil {
+		return fmt.Errorf("erreur de requete: %d", err)
+	}
+	req.Header.Set("Accept", "application/json")
 
-func GetJson(Url,  ) {
-	req, err:= 
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	err = json.NewDecoder(resp.Body).Decode(destination)
+	if err != nil {
+		return fmt.Errorf("erreur de traduction: %d", err)
+	}
+	return nil
 }
