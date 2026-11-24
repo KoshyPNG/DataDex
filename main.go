@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
+
+var Url string = "https://dinofyi.com/api/v1/"
 
 func main() {
-	fmt.Println("Hello, World!")
+	mux := http.NewServeMux()
+	log.Fatal(http.ListenAndServe(":6001", mux))
+	fmt.Println()
 }
+
