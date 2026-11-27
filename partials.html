@@ -1,0 +1,40 @@
+{{define "head"}}<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{.Title}} – DinoDex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css"></head><body>
+<header class="site-header"><div class="wrap">
+<a class="logo" href="/">DinoDex</a>
+<nav aria-label="Navigation principale"><ul>
+<li><a href="/" {{if eq .Page "home"}}aria-current="page"{{end}}>Accueil</a></li>
+<li><a href="/dinosaurs" {{if eq .Page "dinos"}}aria-current="page"{{end}}>Dinosaures</a></li>
+<li><a href="/classifications" {{if eq .Page "classes"}}aria-current="page"{{end}}>Classifications</a></li>
+<li><a href="/sites" {{if eq .Page "sites"}}aria-current="page"{{end}}>Sites de fouilles</a></li>
+<li><a href="/favorites" {{if eq .Page "favs"}}aria-current="page"{{end}}>Favoris ({{.FavCount}})</a></li>
+</ul></nav></div></header><main><div class="wrap">{{end}}
+
+{{define "foot"}}</div></main>
+<footer class="site-footer"><div class="wrap">DinoDex – données issues de l’API Dinosaures.</div></footer></body></html>{{end}}
+
+{{/* Carte dinosaure réutilisée par /dinosaurs et /favorites */}}
+{{define "dino-card"}}
+<li class="card">
+  <h3>{{.Nom}}</h3>
+  <p class="sci">{{.Nom_Scientifique}}</p>
+  <div class="tags">
+    <span class="tag">{{.Classification}}</span>
+    <span class="tag diet">{{.Alimentation}}</span>
+    {{range .Periode}}<span class="tag">{{.}}</span>{{end}}
+  </div>
+  <dl class="specs">
+    <div><dt>Hauteur</dt><dd>{{.Hauteur}} m</dd></div>
+    <div><dt>Longueur</dt><dd>{{.Largueur}} m</dd></div>
+    <div><dt>Poids</dt><dd>{{.Poids}} kg</dd></div>
+  </dl>
+  <form class="actions" method="post" action="/favorites/toggle">
+    <input type="hidden" name="slug" value="{{.Id}}">
+    <button class="fav" aria-pressed="{{if .IsFav}}true{{else}}false{{end}}">{{if .IsFav}}★ Retirer des favoris{{else}}☆ Ajouter aux favoris{{end}}</button>
+  </form>
+</li>{{end}}

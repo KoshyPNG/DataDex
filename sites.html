@@ -1,0 +1,16 @@
+{{template "head" .}}
+<h1>Sites de fouilles</h1>
+<p class="muted" style="margin:.75rem 0 2rem">Formations géologiques où des fossiles ont été extraits.</p>
+<ul class="sites">
+  {{range .Sites}}
+  <li>
+    <strong>{{.Nom}}</strong>
+    <span class="muted">{{.Pays}}</span>
+    <div>
+      <div class="bar" role="img" aria-label="{{.Nombre_decouvertes}} découvertes"><i style="width:{{.Pourcentage}}%"></i></div>
+      <small>{{.Nombre_decouvertes}} découvertes</small>
+    </div>
+  </li>
+  {{else}}<li class="empty">Aucun site disponible.</li>{{end}}
+</ul>
+{{template "foot" .}}

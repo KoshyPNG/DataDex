@@ -1,0 +1,13 @@
+{{template "head" .}}
+<h1>Classifications</h1>
+<p class="muted" style="margin:.75rem 0 2rem">Cliquez sur une famille pour voir ses dinosaures.</p>
+<ul class="grid">
+  {{range .Classifications}}
+  <li><a class="card class-card" href="/dinosaurs?classification={{.Nom}}">
+    <span class="count">{{.Total}}</span>
+    <h3>{{.Nom}}</h3>
+    <p class="muted">{{.Exemples}}</p>
+  </a></li>
+  {{else}}<li class="empty">Aucune classification disponible.</li>{{end}}
+</ul>
+{{template "foot" .}}

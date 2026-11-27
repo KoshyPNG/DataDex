@@ -1,0 +1,32 @@
+{{template "head" .}}
+<section class="hero">
+  <h1>Explorez 250 millions d’années de dinosaures.</h1>
+  <p>Cherchez une espèce, parcourez les grandes familles et découvrez où les fossiles ont été trouvés.</p>
+  <form class="search" action="/dinosaurs" method="get" role="search">
+    <input type="search" name="q" placeholder="Nom ou nom scientifique…" aria-label="Rechercher un dinosaure">
+    <button class="btn">Rechercher</button>
+  </form>
+</section>
+
+<section aria-labelledby="t-periodes">
+  <h2 id="t-periodes">Les périodes géologiques</h2>
+  <ol class="timeline">
+    {{range .Periodes}}
+    <li>
+      <div><h3>{{.Nom}} <span class="muted">· {{.Ere}}</span></h3>
+        <p>{{.Description}}</p>
+        <p class="muted">{{.Nombre_especes}} espèces connues</p></div>
+      <div class="when">{{.Annee_debut}} → {{.Annee_fin}} Ma</div>
+    </li>{{end}}
+  </ol>
+</section>
+
+<section aria-labelledby="t-acces">
+  <h2 id="t-acces">Par où commencer ?</h2>
+  <div class="shortcuts">
+    <a class="card class-card" href="/dinosaurs"><h3>Tous les dinosaures</h3><p>Recherche, filtres et pagination.</p></a>
+    <a class="card class-card" href="/classifications"><h3>Classifications</h3><p>Théropodes, sauropodes, cératopsiens…</p></a>
+    <a class="card class-card" href="/sites"><h3>Sites de fouilles</h3><p>Les formations où l’on a trouvé le plus de fossiles.</p></a>
+  </div>
+</section>
+{{template "foot" .}}

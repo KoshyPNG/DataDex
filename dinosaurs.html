@@ -1,0 +1,48 @@
+{{template "head" .}}
+<h1>Dinosaures</h1>
+
+<form class="toolbar" method="get" action="/dinosaurs" role="search">
+  <label class="q">Recherche (nom ou nom scientifique)
+    <input type="search" name="q" value="{{.Query}}" placeholder="ex. Tyrannosaurus"></label>
+
+  <label>Classification
+    <select name="classification"><option value="">Toutes</option>
+      {{range .Classifications}}<option value="{{.}}" {{if eq . $.Filters.Classification}}selected{{end}}>{{.}}</option>{{end}}
+    </select></label>
+  <label>Alimentation
+    <select name="diet"><option value="">Toutes</option>
+      {{range .Diets}}<option value="{{.}}" {{if eq . $.Filters.Diet}}selected{{end}}>{{.}}</option>{{end}}
+    </select></label>
+  <label>Période
+    <select name="period"><option value="">Toutes</option>
+      {{range .PeriodNames}}<option value="{{.}}" {{if eq . $.Filters.Period}}selected{{end}}>{{.}}</option>{{end}}
+    </select></label>
+  <label>Par page
+    <select name="per_page">
+      {{range .PerPageOptions}}<option value="{{.}}" {{if eq . $.PerPage}}selected{{end}}>{{.}}</option>{{end}}
+    </select></label>
+
+  <div><button class="btn">Appliquer</button> <a class="btn ghost" href="/dinosaurs">Réinitialiser</a></div>
+</form>
+
+<div class="results-info">
+  <p><strong>{{.Total}}</strong> dinosaure(s) trouvé(s)</p>
+  <p class="muted">Page {{.CurrentPage}} sur {{.TotalPages}}</p>
+</div>
+
+{{if .Dinos}}
+<ul class="grid">{{range .Dinos}}{{template "dino-card" .}}{{end}}</ul>
+{{else}}
+<div class="empty"><h2>Aucun résultat</h2><p>Essayez un autre mot-clé ou retirez un filtre.</p></div>
+{{end}}
+
+{{if gt .TotalPages 1}}
+<nav class="pagination" aria-label="Pagination">
+  {{if gt .CurrentPage 1}}<a href="?{{.BaseQuery}}&page={{.PrevPage}}" rel="prev">Précédent</a>{{else}}<span class="off">Précédent</span>{{end}}
+  {{range .Pages}}
+    {{if eq . $.CurrentPage}}<span aria-current="page">{{.}}</span>{{else}}<a href="?{{$.BaseQuery}}&page={{.}}">{{.}}</a>{{end}}
+  {{end}}
+  {{if lt .CurrentPage .TotalPages}}<a href="?{{.BaseQuery}}&page={{.NextPage}}" rel="next">Suivant</a>{{else}}<span class="off">Suivant</span>{{end}}
+</nav>
+{{end}}
+{{template "foot" .}}

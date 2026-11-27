@@ -1,0 +1,6 @@
+{{template "head" .}}
+<h1>Mes favoris</h1>
+<p class="muted" style="margin:.75rem 0 2rem">Liste commune à tous les visiteurs.</p>
+{{if .Dinos}}<ul class="grid">{{range .Dinos}}{{template "dino-card" .}}{{end}}</ul>
+{{else}}<div class="empty"><h2>Aucun favori</h2><p><a href="/dinosaurs">Parcourir les dinosaures</a> pour en ajouter.</p></div>{{end}}
+{{template "foot" .}}
